@@ -5,6 +5,7 @@ import { AppService } from './providers/app.service';
 import appConfig from './configs/app.config';
 import dbConfig from './configs/db.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { AppCommonModule } from './common/app-common.module';
 
 @Module({
   imports: [
@@ -26,6 +27,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
         autoLoadEntities: configService.get('typeOrm.autoLoadEntities'),
       }),
     }),
+
+    AppCommonModule,
   ],
   controllers: [AppController],
   providers: [AppService],

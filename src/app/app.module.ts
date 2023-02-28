@@ -6,6 +6,7 @@ import appConfig from './configs/app.config';
 import dbConfig from './configs/db.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppCommonModule } from './common/app-common.module';
+import { UserModule } from 'src/user/user.module';
 
 @Module({
   imports: [
@@ -29,6 +30,7 @@ import { AppCommonModule } from './common/app-common.module';
     }),
 
     AppCommonModule,
+    UserModule,
   ],
   controllers: [AppController],
   providers: [AppService],

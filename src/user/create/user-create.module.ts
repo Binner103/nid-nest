@@ -2,6 +2,6 @@ import { Module } from '@nestjs/common';
 import { UserCreateController } from './controllers/user-create.controller';
 
 @Module({
-  controllers: [UserCreateController]
+  controllers: [UserCreateController],
 })
 export class UserCreateModule {}

@@ -3,10 +3,11 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { UserCreateModule } from './create/user-create.module';
 import { UserEntity } from './entities/user.entity';
 import { UserEntitySubscriber } from './entities/user.entity.subscriber';
+import { UserSaga } from './sagas/user.saga';
 
 @Module({
   imports: [UserCreateModule, TypeOrmModule.forFeature([UserEntity])],
   exports: [TypeOrmModule],
-  providers: [UserEntitySubscriber],
+  providers: [UserEntitySubscriber, UserSaga],
 })
 export class UserModule {}

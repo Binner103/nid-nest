@@ -7,6 +7,7 @@ import dbConfig from './configs/db.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AppCommonModule } from './common/app-common.module';
 import { UserModule } from 'src/user/user.module';
+import { AppNotificationModule } from './notification/app-notification.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { UserModule } from 'src/user/user.module';
 
     AppCommonModule,
     UserModule,
+    AppNotificationModule,
   ],
   controllers: [AppController],
   providers: [AppService],

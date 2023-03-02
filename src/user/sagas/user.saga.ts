@@ -3,7 +3,7 @@ import { ofType, Saga } from '@nestjs/cqrs';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { SendMessageCommand } from 'src/app/notification/commands/send-message.command';
-import { UserCreatedEvent } from '../create/events/user-created.event';
+import { UserCreatedEvent } from '../modules/create/events/user-created.event';
 
 @Injectable()
 export class UserSaga {

@@ -5,7 +5,7 @@ import { AppService } from './providers/app.service';
 import appConfig from './configs/app.config';
 import dbConfig from './configs/db.config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppCommonModule } from './common/app-common.module';
+import { AppCommonModule } from './modules/common/app-common.module';
 import { UserModule } from 'src/user/user.module';
 import { AppNotificationModule } from './notification/app-notification.module';
 

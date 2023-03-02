@@ -1,5 +1,5 @@
 import { forwardRef, Module } from '@nestjs/common';
-import { UserModule } from '../user.module';
+import { UserModule } from '../../user.module';
 import { UserShowController } from './controllers/user-show.controller';
 import { GetUserQueryHandler } from './queris/get-user.query.handler';
 

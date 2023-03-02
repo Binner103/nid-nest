@@ -7,7 +7,11 @@ import { UserSaga } from './sagas/user.saga';
 import { UserShowModule } from './show/user-show.module';
 
 @Module({
-  imports: [UserCreateModule, TypeOrmModule.forFeature([UserEntity]), UserShowModule],
+  imports: [
+    UserCreateModule,
+    TypeOrmModule.forFeature([UserEntity]),
+    UserShowModule,
+  ],
   exports: [TypeOrmModule],
   providers: [UserEntitySubscriber, UserSaga],
 })

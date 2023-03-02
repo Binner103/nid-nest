@@ -19,6 +19,6 @@ export class UserEntitySubscriber
   }
 
   async beforeInsert(event: InsertEvent<UserEntity>) {
-    // 
+    //
   }
 }

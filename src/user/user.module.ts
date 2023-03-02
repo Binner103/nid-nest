@@ -5,6 +5,7 @@ import { UserEntity } from './entities/user.entity';
 import { UserEntitySubscriber } from './entities/user.entity.subscriber';
 import { UserSaga } from './sagas/user.saga';
 import { UserShowModule } from './modules/show/user-show.module';
+import { UserNotExistValidator } from './validators/user-not-exist.validator';
 
 @Module({
   imports: [
@@ -13,6 +14,6 @@ import { UserShowModule } from './modules/show/user-show.module';
     UserShowModule,
   ],
   exports: [TypeOrmModule],
-  providers: [UserEntitySubscriber, UserSaga],
+  providers: [UserEntitySubscriber, UserSaga, UserNotExistValidator],
 })
 export class UserModule {}

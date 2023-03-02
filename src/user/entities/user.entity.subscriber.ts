@@ -4,8 +4,8 @@ import {
   EventSubscriber,
   InsertEvent,
 } from 'typeorm';
+import * as bcrypt from 'bcrypt';
 import { UserEntity } from './user.entity';
-
 @EventSubscriber()
 export class UserEntitySubscriber
   implements EntitySubscriberInterface<UserEntity>
@@ -19,6 +19,7 @@ export class UserEntitySubscriber
   }
 
   async beforeInsert(event: InsertEvent<UserEntity>) {
-    //
+    // 加密用户密码
+    event.entity.password = await bcrypt.hash(event.entity.password, 12);
   }
 }

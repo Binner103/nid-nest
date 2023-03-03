@@ -12,6 +12,7 @@ export class AuthLocalStrategy extends PassportStrategy(
   }
 
   validate(name: string, password: string) {
-    return { name };
+    // return { name };
+    return null;
   }
 }

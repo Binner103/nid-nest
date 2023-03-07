@@ -9,10 +9,14 @@ import { AppCommonModule } from './modules/common/app-common.module';
 import { UserModule } from 'src/user/user.module';
 import { AppNotificationModule } from './notification/app-notification.module';
 import { AuthModule } from 'src/auth/auth.module';
+import authConfig from 'src/auth/configs/auth.config';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, load: [appConfig, dbConfig] }),
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [appConfig, dbConfig, authConfig],
+    }),
 
     /**
      * 数据库

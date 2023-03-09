@@ -3,6 +3,7 @@ import { CommandBus } from '@nestjs/cqrs';
 import { UserEntity } from 'src/user/entities/user.entity';
 import { CurrentUser } from '../decorators/current-user.decorator';
 import { CreateJwtCommand } from '../modules/jwt/commands/create-jwt.command';
+import { AuthJwtGuard } from '../modules/jwt/guards/auth-jwt.guard';
 import { AuthLocalGuard } from '../modules/local/guards/auth-local.guard';
 
 @Controller()
@@ -17,5 +18,11 @@ export class AuthController {
       new CreateJwtCommand({ id, name }),
     );
     return { id, name, token };
+  }
+
+  @Post('auth/validate')
+  @UseGuards(AuthJwtGuard)
+  authValidate(@CurrentUser() user: UserEntity) {
+    return user;
   }
 }

@@ -9,6 +9,7 @@ import { AppCommonModule } from './modules/common/app-common.module';
 import { UserModule } from 'src/user/user.module';
 import { AppNotificationModule } from './notification/app-notification.module';
 import { AuthModule } from 'src/auth/auth.module';
+import { AppUploadModule } from './modules/upload/app-upload.module';
 import authConfig from 'src/auth/configs/auth.config';
 
 @Module({
@@ -39,6 +40,7 @@ import authConfig from 'src/auth/configs/auth.config';
     UserModule,
     AppNotificationModule,
     AuthModule,
+    AppUploadModule,
   ],
   controllers: [AppController],
   providers: [AppService],

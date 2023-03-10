@@ -36,3 +36,6 @@ lerna-debug.log*
 
 # App
 .env*
+
+# File
+uploads

@@ -21,7 +21,7 @@ export const createFileFilter = (fileTypes: Array<string>) => {
  * 图像文件过滤
  */
 export const imageFileFilter = createFileFilter([
-  'image.png',
-  'image.jpg',
-  'image.jpeg',
+  'image/png',
+  'image/jpg',
+  'image/jpeg',
 ]);

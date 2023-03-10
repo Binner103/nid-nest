@@ -1,7 +1,13 @@
+import path from 'path';
+
 export default () => {
+  const dest = process.env.UPLOAD_DEST;
+  const avatar = process.env.UPLOAD_AVATAR;
+
   return {
     upload: {
-      dest: process.env.UPLOAD_DEST,
+      dest,
+      avatar: path.join(dest, avatar),
     },
   };
 };

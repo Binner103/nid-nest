@@ -4,6 +4,6 @@ import { AvatarController } from './controllers/avatar.controller';
 
 @Module({
   controllers: [AvatarController],
-  imports: [AppUploadModule],
+  imports: [AppUploadModule.register({ destination: 'upload.avatar' })],
 })
 export class AvatarModule {}

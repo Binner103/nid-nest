@@ -21,6 +21,6 @@ export class GetUserAvatarQueryHandler
     if (!avatar) {
       throw new NotFoundException('没找到用户头像');
     }
-    return avatar;
+    return userId;
   }
 }

@@ -3,6 +3,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { UserEntity } from '../../../entities/user.entity';
 import { Repository } from 'typeorm';
 import { GetUserQuery } from './get-user.query';
+import { NotFoundException } from '@nestjs/common';
 
 @QueryHandler(GetUserQuery)
 export class GetUserQueryHandler implements IQueryHandler<GetUserQuery> {
@@ -14,11 +15,17 @@ export class GetUserQueryHandler implements IQueryHandler<GetUserQuery> {
 
   async execute(query: GetUserQuery) {
     const { id } = query.params;
-    // return this.userRepository.findOneBy({ id });
-    return this.userRepository
+    const user = await this.userRepository
       .createQueryBuilder('user')
-      .select(['user.id', 'user.name'])
+      .select(['user.id AS id', 'user.name AS name'])
+      .addSelect('IF(COUNT(avatar.id), 1, NULL)', 'avatar')
+      .leftJoin('user.avatar', 'avatar')
       .where('user.id = :userId', { userId: id })
-      .getOne();
+      .getRawOne();
+
+    if (!user.id) {
+      throw new NotFoundException('没找到用户');
+    }
+    return user;
   }
 }

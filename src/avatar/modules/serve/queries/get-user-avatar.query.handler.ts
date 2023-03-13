@@ -17,10 +17,13 @@ export class GetUserAvatarQueryHandler
 
   async execute(query: GetUserAvatarQuery) {
     const { userId } = query.params;
-    const [avatar] = await this.avatarRepository.find({ where: { userId } });
+    const [avatar] = await this.avatarRepository.find({
+      where: { userId },
+      order: { id: 'DESC' },
+    });
     if (!avatar) {
       throw new NotFoundException('没找到用户头像');
     }
-    return userId;
+    return avatar;
   }
 }

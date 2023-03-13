@@ -1,8 +1,10 @@
 import {
+  BadRequestException,
   Controller,
   Get,
   Param,
   ParseIntPipe,
+  Query,
   Res,
   StreamableFile,
 } from '@nestjs/common';
@@ -22,13 +24,27 @@ export class AvatarServeController {
   async serveAvatar(
     @Param('userId', ParseIntPipe) userId: number,
     @Res({ passthrough: true }) response: Response,
+    @Query('size') size: string,
   ) {
+    if (!size) {
+      throw new BadRequestException('请选择头像尺寸');
+    }
+
+    const isValidSize = ['large', 'medium', 'small'].some(
+      (item) => item == size,
+    );
+
+    if (!isValidSize) {
+      throw new BadRequestException('无效头像尺寸');
+    }
+
     const avatar = await this.queryBus.execute(
       new GetUserAvatarQuery({ userId }),
     );
 
     const avatarStream = this.avatarServeService.getUserAvatarStream(
       avatar.filename,
+      size,
     );
 
     response.set({

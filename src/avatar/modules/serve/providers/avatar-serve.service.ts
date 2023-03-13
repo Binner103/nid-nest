@@ -7,10 +7,10 @@ import { ConfigService } from '@nestjs/config';
 export class AvatarServeService {
   constructor(private readonly configService: ConfigService) {}
 
-  getUserAvatarStream(filename: string): fs.ReadStream {
+  getUserAvatarStream(filename: string, size: string): fs.ReadStream {
     const avatarPath = path.join(
-      this.configService.get('upload.avatar'),
-      filename,
+      this.configService.get('upload.avatarResized'),
+      `${filename}-${size}`,
     );
 
     const fileExist = fs.existsSync(avatarPath);

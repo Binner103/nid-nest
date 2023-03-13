@@ -8,6 +8,7 @@ export default () => {
     upload: {
       dest,
       avatar: path.join(dest, avatar),
+      avatarResized: path.join(dest, avatar, 'resize'),
     },
   };
 };

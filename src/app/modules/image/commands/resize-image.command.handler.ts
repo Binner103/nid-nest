@@ -12,11 +12,11 @@ export class ResizeImageCommandHandler
 
   async execute(command: ResizeImageCommand) {
     // 准备数据
-    const { filename, filepath, sizes, distination } = command.params;
+    const { filename, filepath, sizes, destination } = command.params;
 
     // 创建目录
-    if (!fs.existsSync(distination)) {
-      fs.mkdirSync(distination, { recursive: true });
+    if (!fs.existsSync(destination)) {
+      fs.mkdirSync(destination, { recursive: true });
     }
 
     // 读取文件
@@ -30,7 +30,7 @@ export class ResizeImageCommandHandler
       }
 
       const resizedImagePath = path.join(
-        distination,
+        destination,
         `${filename}-${size.suffix}`,
       );
 

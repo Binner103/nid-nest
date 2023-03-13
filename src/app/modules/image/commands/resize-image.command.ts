@@ -8,7 +8,7 @@ export interface ResizeImageSize {
 }
 
 export interface ResizeImageCommandParams {
-  distination?: string;
+  destination?: string;
   filepath: string;
   filename: string;
   sizes: Array<ResizeImageSize>;

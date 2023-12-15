@@ -62,6 +62,26 @@ export class UpdateUserCommandHandler
       user.name = update.name;
       await this.userRpository.save(user);
     }
+
+    /**
+     * 更新密码
+     */
+    if (update.password) {
+      // 检查要更新的密码是否与当前密码相同
+      const isSamePassword = await bcrypt.compare(
+        update.password,
+        user.password,
+      );
+
+      if (isSamePassword) {
+        throw new BadRequestException('要更新的密码与当前密码相同');
+      }
+
+      // 保存密码
+      user.password = await bcrypt.hash(update.password, 12);
+      await this.userRpository.save(user);
+    }
+
     return {
       message: '成功更新了用户',
     };

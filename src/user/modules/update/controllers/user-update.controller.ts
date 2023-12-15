@@ -10,7 +10,7 @@ import { UpdateUserCommand } from '../commands/update-user.command';
 export class UserUpdateController {
   constructor(private readonly commandBus: CommandBus) {}
 
-  @Patch('users/:userId')
+  @Patch('users')
   @UseGuards(AuthJwtGuard)
   updateUser(@Body() body: UpdateUserDto, @CurrentUser() user: UserEntity) {
     return this.commandBus.execute(

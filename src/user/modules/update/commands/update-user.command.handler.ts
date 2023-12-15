@@ -20,18 +20,12 @@ export class UpdateUserCommandHandler
     const { userId, validate, update } = command.params;
 
     // 查询用户数据
-    const userQueryBuilder = this.userRpository
-      .createQueryBuilder('user')
-      .select([
-        'user.id AS id',
-        'user.name AS name',
-        'user.password AS password',
-      ]);
+    const userQueryBuilder = this.userRpository.createQueryBuilder('user');
 
     // 查询用户
     const user = await userQueryBuilder
       .where('user.id = :userId', { userId })
-      .getRawOne();
+      .getOne();
 
     if (!user) {
       throw new NotFoundException('没找到要更新的用户');
@@ -46,6 +40,30 @@ export class UpdateUserCommandHandler
     if (!isPasswordMatches) {
       throw new BadRequestException('密码不对');
     }
-    return command;
+
+    /**
+     * 更新用户名
+     */
+    if (update.name) {
+      if (user.name == update.name) {
+        throw new BadRequestException('要更新的用户名与当前用户名相同');
+      }
+
+      // 检查用户名是否被占用
+      const hasUser = await userQueryBuilder
+        .where('user.name = :name', { name: update.name })
+        .getCount();
+
+      if (hasUser) {
+        throw new BadRequestException('用户名已存在');
+      }
+
+      // 保存用户名修改
+      user.name = update.name;
+      await this.userRpository.save(user);
+    }
+    return {
+      message: '成功更新了用户',
+    };
   }
 }

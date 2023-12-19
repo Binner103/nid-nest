@@ -13,6 +13,7 @@ import { AppUploadModule } from './modules/upload/app-upload.module';
 import authConfig from 'src/auth/configs/auth.config';
 import { AvatarModule } from 'src/avatar/avatar.module';
 import { AppImageModule } from './modules/image/app-image.module';
+import { PostModule } from 'src/post/post.module';
 
 @Module({
   imports: [
@@ -45,6 +46,7 @@ import { AppImageModule } from './modules/image/app-image.module';
     AppUploadModule,
     AvatarModule,
     AppImageModule,
+    PostModule,
   ],
   controllers: [AppController],
   providers: [AppService],

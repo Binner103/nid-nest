@@ -14,6 +14,7 @@ import authConfig from 'src/auth/configs/auth.config';
 import { AvatarModule } from 'src/avatar/avatar.module';
 import { AppImageModule } from './modules/image/app-image.module';
 import { PostModule } from 'src/post/post.module';
+import { AppAccessControlModule } from './modules/access-control/app-access-control.module';
 
 @Module({
   imports: [
@@ -47,6 +48,7 @@ import { PostModule } from 'src/post/post.module';
     AvatarModule,
     AppImageModule,
     PostModule,
+    AppAccessControlModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -1,6 +1,13 @@
-import { InferSubjects, PureAbility } from '@casl/ability';
+import {
+  AbilityBuilder,
+  AbilityClass,
+  ExtractSubjectType,
+  InferSubjects,
+  PureAbility,
+} from '@casl/ability';
 import { Injectable } from '@nestjs/common';
-import { PostEntity } from 'src/post/entities/post.entity';
+import { ConfigService } from '@nestjs/config';
+import { PostEntity, PostStatus } from 'src/post/entities/post.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
 
 export enum Action {
@@ -20,4 +27,31 @@ export type Subjects = InferSubjects<
 export type AppAbility = PureAbility<[Action, Subjects]>;
 
 @Injectable()
-export class AppAbilityFactory {}
+export class AppAbilityFactory {
+  constructor(private readonly configService: ConfigService) {}
+
+  createAbilityForUser(user: UserEntity) {
+    const { can, build } = new AbilityBuilder<AppAbility>(
+      PureAbility as AbilityClass<AppAbility>,
+    );
+
+    // 获取配置中管理员的id
+    const rootUserId = this.configService.get('accessControl.rootUserId');
+
+    // 管理员可以管理所有资源
+    if ((user.id = rootUserId)) {
+      can(Action.manage, 'all');
+    }
+
+    // 用户可以阅读状态是公开的内容
+    can(Action.read, PostEntity, { status: PostStatus.published });
+
+    // 内容作者可以管理自己发布的内容
+    can(Action.manage, PostEntity, { userId: user.id });
+
+    return build({
+      detectSubjectType: (subject) =>
+        subject.constructor as ExtractSubjectType<Subjects>,
+    });
+  }
+}

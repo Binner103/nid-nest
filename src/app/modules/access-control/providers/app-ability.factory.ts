@@ -3,7 +3,7 @@ import {
   AbilityClass,
   ExtractSubjectType,
   InferSubjects,
-  PureAbility,
+  Ability,
 } from '@casl/ability';
 import { Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
@@ -24,7 +24,7 @@ export type Subjects = InferSubjects<
 >;
 
 // 能力
-export type AppAbility = PureAbility<[Action, Subjects]>;
+export type AppAbility = Ability<[Action, Subjects]>;
 
 @Injectable()
 export class AppAbilityFactory {
@@ -32,14 +32,14 @@ export class AppAbilityFactory {
 
   createAbilityForUser(user: UserEntity) {
     const { can, build } = new AbilityBuilder<AppAbility>(
-      PureAbility as AbilityClass<AppAbility>,
+      Ability as AbilityClass<AppAbility>,
     );
 
     // 获取配置中管理员的id
     const rootUserId = this.configService.get('accessControl.rootUserId');
 
     // 管理员可以管理所有资源
-    if ((user.id = rootUserId)) {
+    if (user.id === rootUserId) {
       can(Action.manage, 'all');
     }
 

@@ -15,6 +15,7 @@ import { AvatarModule } from 'src/avatar/avatar.module';
 import { AppImageModule } from './modules/image/app-image.module';
 import { PostModule } from 'src/post/post.module';
 import { AppAccessControlModule } from './modules/access-control/app-access-control.module';
+import { FileModule } from 'src/file/file.module';
 
 @Module({
   imports: [
@@ -49,6 +50,7 @@ import { AppAccessControlModule } from './modules/access-control/app-access-cont
     AppImageModule,
     PostModule,
     AppAccessControlModule,
+    FileModule,
   ],
   controllers: [AppController],
   providers: [AppService],

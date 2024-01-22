@@ -4,14 +4,16 @@ import { Observable } from 'rxjs';
 import { AppAbilityFactory } from '../providers/app-ability.factory';
 import { Policy } from '../types/policy.interface';
 import { USE_POLICIES } from '../decorators/use-policies.decorator';
-import { getManager } from 'typeorm';
+import { DataSource } from 'typeorm';
 
 @Injectable()
 export class PolicyGuard implements CanActivate {
   constructor(
     private readonly reflector: Reflector,
     private readonly appAbilityFactory: AppAbilityFactory,
+    private readonly dataSource: DataSource,
   ) {}
+
   async canActivate(context: ExecutionContext): Promise<boolean> {
     // 获取权限策略
     const policies =
@@ -24,14 +26,14 @@ export class PolicyGuard implements CanActivate {
     //用户能力
     const userAbility = this.appAbilityFactory.createAbilityForUser(user);
 
-    const entityManager = getManager();
+    const entityManager = this.dataSource.manager;
 
     const checkPolicy = async (policy: Policy) => {
       let { subject, action, useInstance, subjectIdParam } = policy;
 
       if (useInstance) {
         const subjectId = params[subjectIdParam];
-        subject = await entityManager.findOne(subject, subjectId);
+        subject = (await entityManager.findOne(subject, subjectId)) as any;
       }
 
       return userAbility.can(action, subject);

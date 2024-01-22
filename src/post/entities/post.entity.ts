@@ -1,5 +1,12 @@
+import { FileEntity } from 'src/file/entities/file.entity';
 import { UserEntity } from 'src/user/entities/user.entity';
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  ManyToOne,
+  OneToMany,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 export enum PostStatus {
   draft = 'draft',
@@ -29,4 +36,7 @@ export class PostEntity {
    */
   @ManyToOne(() => UserEntity, (user) => user.posts, { onDelete: 'CASCADE' })
   user: UserEntity;
+
+  @OneToMany(() => FileEntity, (file) => file.post)
+  files: Array<FileEntity>;
 }
